@@ -11,7 +11,7 @@ public class JsonOperations {
 		
 		Object obj = jsonResponse;
 		for(String s : jPath.split("/")) {
-			System.out.println("JPath Spilt> "+s);
+			//.out.println("JPath Spilt> "+s);
 			
 			if(!s.isEmpty()) {
 				if(!(s.contains("[") || s.contains("]"))) {

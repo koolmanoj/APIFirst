@@ -6,8 +6,8 @@
       <class name="com.qa.test.TestRestApi">
         <methods>
           <include name="setUp"/>
+          <include name="nearestPostcode"/>
           <include name="tearDown"/>
-          <include name="restApiTest"/>
         </methods>
       </class> <!-- com.qa.test.TestRestApi -->
     </classes>
