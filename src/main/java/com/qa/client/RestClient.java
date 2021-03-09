@@ -24,40 +24,5 @@ public class RestClient extends TestBase{
 		
 		return httpResponse;
 	}
-	
-	public CloseableHttpResponse get(String url, HashMap<String , String> headerMap) throws ClientProtocolException, IOException {
-		
-		CloseableHttpClient httpClient = HttpClients.createDefault();
-		HttpGet httpGet = new HttpGet(url);
-		
-		for(Map.Entry<String, String> entry : headerMap.entrySet()) {
-			
-			httpGet.addHeader(entry.getKey() , entry.getValue());
-			
-		}
-		
-		CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
-		
-		return httpResponse;
-	}
-	
-	public CloseableHttpResponse post(String url, String entityString, HashMap<String , String> headerMap) throws ClientProtocolException, IOException {
-		
-		CloseableHttpClient httpClient = HttpClients.createDefault();
-		HttpPost httpPost = new HttpPost(url);
-		
-		httpPost.setEntity(new StringEntity(entityString));
-		
-		for(Map.Entry<String, String> entry : headerMap.entrySet()) {
-			
-			httpPost.addHeader(entry.getKey() , entry.getValue());
-			
-		}
-		
-		CloseableHttpResponse httpResponse = httpClient.execute(httpPost);
-		
-		return httpResponse;
-	}
-	
 
 }

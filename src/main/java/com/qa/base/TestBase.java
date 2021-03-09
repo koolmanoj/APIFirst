@@ -11,6 +11,7 @@ public class TestBase {
 	public static final int status_200 = 200;
 	public static final int status_201 = 201;
 	public static final int status_400 = 400;
+	public static final int status_404 = 404;
 	
 	public Properties prop;
 	
