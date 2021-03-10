@@ -1,11 +1,8 @@
 package com.qa.test;
 
 import java.io.IOException;
-import java.util.HashMap;
 
-import org.apache.http.Header;
 import org.apache.http.ParseException;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
@@ -39,11 +36,10 @@ public class TestRestApi extends TestBase{
 		uri = url + serviceUrl;
 		uri1 = url + ServiceURLnearest;
 		uri2 = url + ServiceURLvalidate;
-		//System.out.println(uri);
 		
 	}
 	
-	@Test(priority = 1)
+	@Test(priority = 1, timeOut=10000)
 	public void checkPostcode() {
 		restClient = new RestClient();
 		
@@ -56,20 +52,17 @@ public class TestRestApi extends TestBase{
 		
 		int status = httpResponse.getStatusLine().getStatusCode();
 		System.out.println("status code: "+ status);
-		
 		Assert.assertEquals(status, status_200, "Error: Request Invalid Please check");
-		
 		
 		if(status == 200) {
 		String bodyResponse = null;
 		try {
 			bodyResponse = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
 		} catch (ParseException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		JSONObject jsonResponse = new JSONObject(bodyResponse);
-		System.out.println("Response Json: "+ jsonResponse) ;
+		System.out.println("Check Post Code Response Json: "+ jsonResponse) ;
 		
 		String country = JsonOperations.readJson(jsonResponse, "/result/country");
 		System.out.println("Country: "+country);
@@ -82,7 +75,7 @@ public class TestRestApi extends TestBase{
 		
 	}
 	
-	@Test(priority = 2)
+	@Test(priority = 2, timeOut=10000)
 	public void nearestPostcode() {
 		
 		restClient = new RestClient();
@@ -109,19 +102,25 @@ public class TestRestApi extends TestBase{
 			e.printStackTrace();
 		}
 		JSONObject jsonResponse = new JSONObject(bodyResponse);
-		System.out.println("Response Json: "+ jsonResponse) ;
+		System.out.println("Nearest Post Code Response Json: "+ jsonResponse) ;
 		
-		String country = JsonOperations.readJson(jsonResponse, "/result/country");
-		System.out.println("Country: "+country);
-		Assert.assertEquals(country, "England");
+		String postcodes = JsonOperations.readJson(jsonResponse, "/result[0]/codes/");
 		
-		String region = JsonOperations.readJson(jsonResponse, "/result/region");
-		System.out.println("Region: "+region);
-		Assert.assertEquals(region, "East of England");
+		if(postcodes != null) {
+		String[] postcode = postcodes.split(",");
+		
+			for(int i=0; i<postcode.length; i++) {
+				System.out.println("postcodes"+i+": "+postcode[i]);
+				}
+		
+			}
+		else {
+			System.out.println("Error: Invalid Response not found any nearest post codes");
+		}
 		}
 	}
 	
-	@Test(priority = 0)
+	@Test(priority = 0, timeOut=10000)
 	public void validatePostcode() {
 		restClient = new RestClient();
 		
@@ -144,7 +143,7 @@ public class TestRestApi extends TestBase{
 			e.printStackTrace();
 		}
 		JSONObject jsonResponse = new JSONObject(bodyResponse);
-		System.out.println("Response Json: "+ jsonResponse) ;
+		System.out.println("Validate post Code Response Json: "+ jsonResponse) ;
 		
 		String result = JsonOperations.readJson(jsonResponse, "/result");
 		System.out.println("Result: "+result);

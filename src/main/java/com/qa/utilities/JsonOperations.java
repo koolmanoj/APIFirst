@@ -1,7 +1,5 @@
 package com.qa.utilities;
 
-import java.util.HashMap;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,5 +26,4 @@ public class JsonOperations {
 		
 		return obj.toString();
 	}
-
 }
